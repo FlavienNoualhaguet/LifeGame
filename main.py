@@ -111,7 +111,7 @@ Alive={self.nalive}/{self.n*self.p} ({palive:.2f}%) and Dead={self.ndead}/{self.
             return im
         
         # Add colorbar with the same height as the axis
-        cbar = plt.colorbar(update(0), ax=ax, fraction=0.046, pad=0.04)  # Adjust fraction and pad according to your preferences
+        cbar = plt.colorbar(update(0), ax=ax, fraction=0.046, pad=0.04)  # Adjust fraction and pad
 
         
         animation = FuncAnimation(fig, update, frames=generations, interval=interval, blit=False, repeat=False)
