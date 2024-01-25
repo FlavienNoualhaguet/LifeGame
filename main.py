@@ -13,21 +13,21 @@ from argparse import ArgumentParser
 
 @dataclass
 class Cell:
-    life:bool
+    life:int
 
     @property
     def alive(self):
-        return self.life
+        return self.life == 1
     
     @property
     def dead(self):
         return not self.alive
     
     def born(self):
-        self.life = True
+        self.life = 1
     
     def kill(self):
-        self.life = False
+        self.life = 0
 
 @dataclass
 class Grid:
@@ -39,9 +39,11 @@ class Grid:
             - 0 : dead
             - 1 : alive 
         """
-        random_values = np.random.randint(0, 2, (self.n, self.p))
-        mask = np.random.randint(0, 2, (self.n, self.p)) # Divide by 2 all 1 to reduce at beggining
-        self.grid = np.vectorize(Cell)(life=(random_values*mask) == 1)
+        grid = np.zeros((self.n, self.p), dtype=int)
+        for rd in np.random.randint(0, 2, int(self.n*self.p/4)):
+            i, j = np.random.randint(0, self.n), np.random.randint(0, self.p)
+            grid[i , j] = rd
+        self.grid = np.vectorize(Cell)(life=grid)
         self.count_alive()
     
     def count_alive(self):
